@@ -1,0 +1,28 @@
+ import SwiftSMTP
+
+func sendEmail() {
+    let smtp = SMTP(
+        hostname: "smtp.example.com",      // Zëvendëso me hostin e SMTP tënd
+        email: "your_email@example.com",   // Zëvendëso me adresën tënde email
+        password: "your_email_password",   // Zëvendëso me fjalëkalimin tënd
+        ssl: .useSTARTTLS
+    )
+
+    let email = EMail(
+        from: Address("your_email@example.com", "Emri Juaj"),  // Zëvendëso me adresën tënde email dhe emrin tënd
+        to: [Address("recipient@example.com", "Emri Pranuesit")],  // Zëvendëso me adresën e pranuesit dhe emrin e tij
+        subject: "Subjekti i emailit",
+        text: "Përmbajtja e emailit"
+    )
+
+    smtp.send(email) { error in
+        if let error = error {
+            print("Gabim gjatë dërgimit të emailit: \(error)")
+        } else {
+            print("Emaili u dërgua me sukses!")
+        }
+    }
+}
+
+// Thirrja e funksionit për të dërguar emailin
+sendEmail()
